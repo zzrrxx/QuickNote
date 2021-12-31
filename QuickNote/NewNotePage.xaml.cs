@@ -26,5 +26,13 @@ namespace QuickNote
     {
       this.InitializeComponent();
     }
+
+    private void btnCancel_Click(object sender, RoutedEventArgs e) {
+      Frame.Navigate(typeof(MainPage));
+    }
+
+    private void btnAdd_Click(object sender, RoutedEventArgs e) {
+      Frame.Navigate(typeof(MainPage));
+    }
   }
 }

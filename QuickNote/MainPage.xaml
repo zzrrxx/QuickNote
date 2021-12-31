@@ -16,13 +16,14 @@
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150*"/>
-                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="textBoxSearch" TextWrapping="Wrap" PlaceholderText="Type to search" VerticalContentAlignment="Top" Margin="20,20,20,20" Height="40"/>
-            <Button x:Name="btnAdd" Grid.Column="1" Content="+" RenderTransformOrigin="0.317,-0.161" HorizontalAlignment="Stretch" Margin="20,0,20,0"
-                    Click="btnAdd_Click"
-                    />
+            <TextBox x:Name="textBoxSearch" TextWrapping="Wrap" PlaceholderText="Type to search" VerticalContentAlignment="Top" Margin="20,20,20,5" Height="32"/>
+            <Button x:Name="btnAdd" Grid.Column="1" Content="+" HorizontalAlignment="Stretch" Margin="0,30,20,0" Height="32"
+                    Click="btnAdd_Click" RenderTransformOrigin="0.5,1.645" VerticalAlignment="Top" />
+            <Button x:Name="btnManage" Grid.Column="2" Content="*" HorizontalAlignment="Stretch" Margin="0,30,20,0" Height="32" VerticalAlignment="Top"/>
 
         </Grid>
         
