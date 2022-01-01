@@ -38,13 +38,18 @@
 
         </Grid>
 
-        <ScrollViewer Grid.Row="1"
-                          Margin="20, 0, 20, 20"
-                          BorderThickness="2,2,2,2" BorderBrush="LightGray">
+        <ScrollViewer Grid.Row="1" Margin="20, 0, 20, 20">
             <controls:MarkdownTextBlock x:Name="markdown"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
-                Text="">
+                Background="White"
+                QuoteBackground="AliceBlue"
+                Text="" 
+                FontFamily="Arial"
+                ParagraphMargin="0,10,0,10"
+                Header3Margin="0,20,0,20" 
+                QuotePadding="10,5,0,5"
+                QuoteMargin="10,10,0,10">
             </controls:MarkdownTextBlock>
         </ScrollViewer>
 
