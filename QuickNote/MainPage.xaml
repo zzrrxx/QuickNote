@@ -20,14 +20,18 @@
                 <ColumnDefinition Width="60"/>
                 <ColumnDefinition Width="60"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="textBoxSearch" TextWrapping="Wrap" PlaceholderText="Type to search" VerticalContentAlignment="Top" Margin="20,20,20,5" Height="32"/>
-            <Button x:Name="btnAdd" Grid.Column="1" Content="+" HorizontalAlignment="Stretch" Margin="0,30,20,0" Height="32"
+            <AutoSuggestBox x:Name="textBoxSearch" PlaceholderText="Type to search" VerticalContentAlignment="Top" Margin="20,20,20,5" Height="32"
+                TextChanged="textBoxSearch_TextChanged"
+                SuggestionChosen="textBoxSearch_SuggestionChosen"
+                QuerySubmitted="textBoxSearch_QuerySubmitted"
+                />
+            <Button x:Name="btnAdd" Grid.Column="1" Content="+" HorizontalAlignment="Stretch" Margin="0,20,20,0" Height="32"
                     Click="btnAdd_Click" RenderTransformOrigin="0.5,1.645" VerticalAlignment="Top" />
-            <Button x:Name="btnManage" Grid.Column="2" Content="*" HorizontalAlignment="Stretch" Margin="0,30,20,0" Height="32" VerticalAlignment="Top"/>
+            <Button x:Name="btnManage" Grid.Column="2" Content="*" HorizontalAlignment="Stretch" Margin="0,20,20,0" Height="32" VerticalAlignment="Top" RenderTransformOrigin="0.625,-0.312"/>
 
         </Grid>
-        
-        <controls:MarkdownTextBlock
+
+        <controls:MarkdownTextBlock x:Name="markdown"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Grid.Row="1"

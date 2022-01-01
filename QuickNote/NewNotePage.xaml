@@ -13,7 +13,7 @@
             <RowDefinition Height="60"/>
             <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBox x:Name="lblName" Margin="20,10,20,0" TextWrapping="Wrap" Text="Name:" VerticalAlignment="Top" IsReadOnly="True" VerticalContentAlignment="Top" BorderThickness="0,0,0,0"/>
-            <TextBox Grid.Column="1" Margin="20,10,20,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" VerticalContentAlignment="Top"/>
+            <TextBox x:Name="textBoxName" Grid.Column="1" Margin="20,10,20,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" VerticalContentAlignment="Top"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -38,7 +38,8 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBox Margin="20,5,5,5" TextWrapping="Wrap" Text="TextBox" BorderThickness="0,0,0,0"/>
+            <TextBox x:Name="textBoxContent" Margin="20,5,5,5" TextWrapping="Wrap" BorderThickness="0,0,0,0" AcceptsReturn="True"
+                     TextChanged="textBoxContent_TextChanged" PlaceholderText="Input note here..." IsSpellCheckEnabled="True"/>
             
             <controls:GridSplitter Grid.Column="1" Width="11" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto"
                 Background="Gray" Foreground="White" FontSize="13">
@@ -51,16 +52,14 @@
                 </controls:GridSplitter.Element>
             </controls:GridSplitter>
 
-            <controls:MarkdownTextBlock
+            <controls:MarkdownTextBlock 
+                x:Name="markdownBlock"
                 Grid.Column="2"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
                 Grid.Row="1"
-                Text="**This is *Markdown*!**"
-                Margin="5, 20, 20, 20"/>
-
-
-
+                Text=""
+                Margin="5, 5, 20, 5"/>
         </Grid>
         <Grid Grid.Row="3">
             <Button x:Name="btnAdd" Content="Add" Margin="0,20,20,0" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60"
