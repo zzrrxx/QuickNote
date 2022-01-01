@@ -92,8 +92,14 @@ namespace QuickNote {
       SQLiteDataReader reader = DBExecuteQuery(query);
       reader.Close();
     }
-    public void UpateNote(Note note) {
-      
+    public void UpdateNote(Note note) {
+      string query = "UPDATE " + NOTE_TABLE + " SET "
+        + "name='"     + DBEscapeText(note.Name) + "', "
+        + "keywords='" + DBEscapeText(string.Join(",", note.Keywords)) + "',"
+        + "content='"  + DBEscapeText(note.Content) + "' "
+        + "WHERE id="  + note.Id;
+      SQLiteDataReader reader = DBExecuteQuery(query);
+      reader.Close();
     }
     public void DeleteNote(Note note) {
       string query = "DELETE FROM " + NOTE_TABLE + " WHERE id=" + note.Id;

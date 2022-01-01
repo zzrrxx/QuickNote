@@ -22,13 +22,29 @@ namespace QuickNote
   /// An empty page that can be used on its own or navigated to within a Frame.
   /// </summary>
   public sealed partial class NewNotePage : Page {
+
+    private Note m_Note = null;
+
     public NewNotePage() {
       this.InitializeComponent();
     }
 
+    protected override void OnNavigatedTo(NavigationEventArgs e) {
+      m_Note = (Note)e.Parameter;
+      if (m_Note == null) return;
+      try {
+        textBoxName.Text = m_Note.Name;
+        textBoxKeywords.Text = string.Join(",", m_Note.Keywords);
+        textBoxContent.Text = m_Note.Content;
+        markdownBlock.Text = m_Note.Content;
+      } catch (Exception ex) {
+        
+      }
+    }
+
     private async void btnCancel_Click(object sender, RoutedEventArgs e) {
 
-      bool chooseYes = await Utils.ShowYesNoMessageBox("Do you want to discard the current note?");
+      bool chooseYes = await Utils.ShowYesNoMessageBox("Do you want to cancel editing the current note?");
       if (!chooseYes) { return; }
 
       Frame.Navigate(typeof(MainPage));
@@ -53,11 +69,20 @@ namespace QuickNote
       }
 
       string[] keywordsArr = keywords.Split(",", StringSplitOptions.RemoveEmptyEntries);
-      Note note = new Note(name, keywordsArr, content);
       try {
-        NoteManager.Instance.AddNote(note);
+
+        if (m_Note == null) {
+          Note note = new Note(name, keywordsArr, content);
+          NoteManager.Instance.AddNote(note);
+        } else {
+          m_Note.Name = name;
+          m_Note.Keywords = keywordsArr;
+          m_Note.Content = content;
+          NoteManager.Instance.UpdateNote(m_Note);
+        }
+
       } catch (Exception ex) {
-        Utils.ShowYesMessageBox("Failed to add the new note: " + ex.Message);
+        Utils.ShowYesMessageBox("Failed to save the note: " + ex.Message);
         return;
       }
 
@@ -65,7 +90,11 @@ namespace QuickNote
     }
 
     private void textBoxContent_TextChanged(object sender, TextChangedEventArgs e) {
-      markdownBlock.Text = textBoxContent.Text;
+      try {
+        markdownBlock.Text = textBoxContent.Text;
+      } catch (Exception ex) {
+        
+      }
     }
   }
 }
