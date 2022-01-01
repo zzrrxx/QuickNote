@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBox x:Name="lblName" Margin="20,10,20,0" TextWrapping="Wrap" Text="Name:" VerticalAlignment="Top" IsReadOnly="True" VerticalContentAlignment="Top" BorderThickness="0,0,0,0"/>
-            <TextBox x:Name="textBoxName" Grid.Column="1" Margin="20,10,20,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" VerticalContentAlignment="Top"/>
+            <TextBox x:Name="textBoxName" Grid.Column="1" Margin="20,10,20,0" TextWrapping="Wrap" PlaceholderText="Note name" VerticalAlignment="Top" VerticalContentAlignment="Top"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -29,17 +29,18 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBox x:Name="lblKeywords" Margin="20,10,20,0" TextWrapping="Wrap" Text="Keywords:" VerticalAlignment="Top" IsReadOnly="True" BorderThickness="0,0,0,0"/>
-            <TextBox x:Name="textBoxKeywords" Grid.Column="1" Margin="20,10,20,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBoxKeywords" Grid.Column="1" Margin="20,10,20,0" TextWrapping="Wrap" PlaceholderText="Note keywords(keyword1, keyword2,)" VerticalAlignment="Top"/>
         </Grid>
-        <Grid Grid.Row="2" BorderBrush="Gray" BorderThickness="2,2,2,2">
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="11"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="textBoxContent" Margin="20,5,5,5" TextWrapping="Wrap" BorderThickness="0,0,0,0" AcceptsReturn="True"
-                     TextChanged="textBoxContent_TextChanged" PlaceholderText="Input note here..." IsSpellCheckEnabled="True"/>
+            <TextBox x:Name="textBoxContent" Margin="20,5,5,5" TextWrapping="Wrap" AcceptsReturn="True"
+                     TextChanged="textBoxContent_TextChanged" PlaceholderText="Input note here..." IsSpellCheckEnabled="True"
+                     BorderThickness="2,2,0,2" BorderBrush="LightGray"/>
             
             <controls:GridSplitter Grid.Column="1" Width="11" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto"
                 Background="Gray" Foreground="White" FontSize="13">
@@ -52,14 +53,13 @@
                 </controls:GridSplitter.Element>
             </controls:GridSplitter>
 
-            <controls:MarkdownTextBlock 
-                x:Name="markdownBlock"
-                Grid.Column="2"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                Grid.Row="1"
-                Text=""
-                Margin="5, 5, 20, 5"/>
+            <ScrollViewer Grid.Column="2"
+                          Margin="5, 5, 20, 5"
+                          BorderThickness="0,2,2,2" BorderBrush="LightGray">
+                <controls:MarkdownTextBlock 
+                    x:Name="markdownBlock"
+                    Text=""/>
+            </ScrollViewer>
         </Grid>
         <Grid Grid.Row="3">
             <Button x:Name="btnAdd" Content="Add" Margin="0,20,20,0" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60"

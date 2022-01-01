@@ -85,9 +85,9 @@ namespace QuickNote {
     }
     public void AddNote(Note note) {
       string query = "INSERT INTO " + NOTE_TABLE + " VALUES (NULL," 
-        + "'" + note.Name + "',"
+        + "'" + DBEscapeText(note.Name) + "',"
         + "'" + string.Join(",", note.Keywords) + "',"
-        + "'" + note.Content + "'"
+        + "'" + DBEscapeText(note.Content) + "'"
         + ")";
       SQLiteDataReader reader = DBExecuteQuery(query);
       reader.Close();
@@ -129,6 +129,19 @@ namespace QuickNote {
       SQLiteCommand cmd = m_DBConn.CreateCommand();
       cmd.CommandText = query;
       return cmd.ExecuteReader();
+    }
+
+
+    private string DBEscapeText(string value) {
+      StringBuilder sb = new StringBuilder();
+      for (int i = 0; i < value.Length; i++) {
+        if (value[i] == '\'') {
+          sb.Append("''");  
+        } else {
+          sb.Append(value[i]);
+        }
+      }
+      return sb.ToString();
     }
 
   }

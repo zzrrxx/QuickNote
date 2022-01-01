@@ -31,13 +31,15 @@
 
         </Grid>
 
-        <controls:MarkdownTextBlock x:Name="markdown"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Grid.Row="1"
-                Text="**This is *Markdown*!**"
-                Margin="20, 20, 20, 20">
-        </controls:MarkdownTextBlock>
+        <ScrollViewer Grid.Row="1"
+                          Margin="20, 20, 20, 20"
+                          BorderThickness="2,2,2,2" BorderBrush="LightGray">
+            <controls:MarkdownTextBlock x:Name="markdown"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Text="">
+            </controls:MarkdownTextBlock>
+        </ScrollViewer>
 
     </Grid>
 </Page>
