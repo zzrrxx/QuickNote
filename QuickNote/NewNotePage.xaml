@@ -10,31 +10,31 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="lblName" Margin="20,10,20,0" TextWrapping="Wrap" Text="Name:" VerticalAlignment="Top" IsReadOnly="True" VerticalContentAlignment="Top" BorderThickness="0,0,0,0"/>
-            <TextBox x:Name="textBoxName" Grid.Column="1" Margin="20,10,20,0" TextWrapping="Wrap" PlaceholderText="Note name" VerticalAlignment="Top" VerticalContentAlignment="Top"/>
+            <TextBox x:Name="lblName" Margin="20,5,5,0" TextWrapping="Wrap" Text="Name:" VerticalAlignment="Top" IsReadOnly="True" VerticalContentAlignment="Top" BorderThickness="0,0,0,0"/>
+            <TextBox x:Name="textBoxName" Grid.Column="1" Margin="5,5,20,0" TextWrapping="Wrap" PlaceholderText="Note name" VerticalAlignment="Top" VerticalContentAlignment="Top"/>
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBox x:Name="lblKeywords" Margin="20,10,20,0" TextWrapping="Wrap" Text="Keywords:" VerticalAlignment="Top" IsReadOnly="True" BorderThickness="0,0,0,0"/>
-            <TextBox x:Name="textBoxKeywords" Grid.Column="1" Margin="20,10,20,0" TextWrapping="Wrap" PlaceholderText="Note keywords(keyword1, keyword2,)" VerticalAlignment="Top"/>
+            <TextBox x:Name="lblKeywords" Margin="20,5,5,0" TextWrapping="Wrap" Text="Keywords:" VerticalAlignment="Top" IsReadOnly="True" BorderThickness="0,0,0,0"/>
+            <TextBox x:Name="textBoxKeywords" Grid.Column="1" Margin="5,5,20,0" TextWrapping="Wrap" PlaceholderText="Note keywords(keyword1, keyword2,)" VerticalAlignment="Top"/>
         </Grid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="11"/>
+                <ColumnDefinition Width="5"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
@@ -42,8 +42,8 @@
                      TextChanged="textBoxContent_TextChanged" PlaceholderText="Input note here..." IsSpellCheckEnabled="True"
                      BorderThickness="2,2,0,2" BorderBrush="LightGray"/>
             
-            <controls:GridSplitter Grid.Column="1" Width="11" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto"
-                Background="Gray" Foreground="White" FontSize="13">
+            <controls:GridSplitter Grid.Column="1" Width="5" ResizeBehavior="BasedOnAlignment" ResizeDirection="Auto"
+                Background="LightGray" Foreground="White" FontSize="13">
                 <controls:GridSplitter.Element>
                     <Grid>
                         <TextBlock HorizontalAlignment="Center"  IsHitTestVisible="False"
@@ -58,13 +58,19 @@
                           BorderThickness="0,2,2,2" BorderBrush="LightGray">
                 <controls:MarkdownTextBlock 
                     x:Name="markdownBlock"
-                    Text=""/>
+                    Background="White"
+                    QuoteBackground="AliceBlue"
+                    Text="" 
+                    ParagraphMargin="0,10,0,10"
+                    Header3Margin="0,20,0,20" 
+                    QuotePadding="10,5,0,5"
+                    QuoteMargin="10,10,0,10"/>
             </ScrollViewer>
         </Grid>
         <Grid Grid.Row="3">
-            <Button x:Name="btnAdd" Content="Add" Margin="0,20,20,0" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60"
+            <Button x:Name="btnAdd" Content="Add" Margin="0,10,20,0" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60"
                     Click="btnAdd_Click"/>
-            <Button x:Name="btnCancel" Content="Cancel" Margin="0,20,120,0" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60"
+            <Button x:Name="btnCancel" Content="Cancel" Margin="0,10,100,0" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60"
                     Click="btnCancel_Click"/>
         </Grid>
     </Grid>
