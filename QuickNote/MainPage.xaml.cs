@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage.Streams;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -12,6 +13,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -91,6 +93,27 @@ namespace QuickNote {
       if (e.PreviousSize.Width == 0 && e.PreviousSize.Height == 0) return;
 
       MyLocalSettings.Instance.InitialMainWindowSize = e.NewSize;
+    }
+
+    private void markdown_ImageResolving(object sender, Microsoft.Toolkit.Uwp.UI.Controls.ImageResolvingEventArgs e) {
+      try {
+        string url = e.Url.Trim();
+        int pos = url.LastIndexOf("/");
+        long id = long.Parse(url.Substring(pos + 1));
+        byte[] imgData = NoteManager.Instance.SearchImage(id);
+
+        BitmapImage biSource = new BitmapImage();
+        using (InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream()) {
+          _ = stream.WriteAsync(imgData.AsBuffer());
+          stream.Seek(0);
+          biSource.SetSource(stream);
+        }
+
+        e.Image = biSource;
+        e.Handled = true;
+      } catch (Exception ex) {
+
+      }
     }
   }
 }

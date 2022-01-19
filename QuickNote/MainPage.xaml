@@ -48,7 +48,8 @@
                 ParagraphMargin="0,10,0,10"
                 Header3Margin="0,20,0,20" 
                 QuotePadding="10,5,0,5"
-                QuoteMargin="10,10,0,10">
+                QuoteMargin="10,10,0,10"
+                ImageResolving="markdown_ImageResolving">
             </controls:MarkdownTextBlock>
         </ScrollViewer>
 

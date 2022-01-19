@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
@@ -32,6 +33,13 @@
             <TextBox x:Name="textBoxKeywords" Grid.Column="1" Margin="5,5,20,0" TextWrapping="Wrap" PlaceholderText="Note keywords(keyword1, keyword2,)" VerticalAlignment="Top"/>
         </Grid>
         <Grid Grid.Row="2">
+            <StackPanel>
+                <Button x:Name="btnInsertImage" Margin="20,0,0,0" BorderThickness="0,0,0,0" Click="btnInsertImage_Click">
+                    <Image Source="/Assets/insert-image.png" Stretch="Fill" Height="20" Width="20"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="5"/>
@@ -64,10 +72,11 @@
                     ParagraphMargin="0,10,0,10"
                     Header3Margin="0,20,0,20" 
                     QuotePadding="10,5,0,5"
-                    QuoteMargin="10,10,0,10"/>
+                    QuoteMargin="10,10,0,10"
+                    ImageResolving="markdownBlock_ImageResolving"/>
             </ScrollViewer>
         </Grid>
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="4">
             <Button x:Name="btnAdd" Content="Add" Margin="0,10,20,0" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60"
                     Click="btnAdd_Click"/>
             <Button x:Name="btnCancel" Content="Cancel" Margin="0,10,100,0" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60"

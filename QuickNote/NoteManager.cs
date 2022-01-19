@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -48,6 +49,7 @@ namespace QuickNote {
   }
   internal class NoteManager {
     private const string NOTE_TABLE  = "Note";
+    private const string IMAGE_TABLE = "Image";
     private const string DB_FILE     = "QuicNote.db";
 
     private SQLiteConnection m_DBConn   = null;
@@ -84,6 +86,7 @@ namespace QuickNote {
       return notes;
     }
     public void AddNote(Note note) {
+      DBBackup();
       string query = "INSERT INTO " + NOTE_TABLE + " VALUES (NULL," 
         + "'" + DBEscapeText(note.Name) + "',"
         + "'" + string.Join(",", note.Keywords) + "',"
@@ -93,6 +96,7 @@ namespace QuickNote {
       reader.Close();
     }
     public void UpdateNote(Note note) {
+      DBBackup();
       string query = "UPDATE " + NOTE_TABLE + " SET "
         + "name='"     + DBEscapeText(note.Name) + "', "
         + "keywords='" + DBEscapeText(string.Join(",", note.Keywords)) + "',"
@@ -102,11 +106,50 @@ namespace QuickNote {
       reader.Close();
     }
     public void DeleteNote(Note note) {
+      DBBackup();
       string query = "DELETE FROM " + NOTE_TABLE + " WHERE id=" + note.Id;
       SQLiteDataReader reader = DBExecuteQuery(query);
       reader.Close();
     }
 
+    public byte[] SearchImage(long id) {
+      // https://stackoverflow.com/questions/625029/how-do-i-store-and-retrieve-a-blob-from-sqlite
+      string query = "SELECT content from " + IMAGE_TABLE + " where id=" + id;
+
+      byte[] imgData = new byte[0];
+      SQLiteDataReader reader = DBExecuteQuery(query);
+      if (reader.Read() && reader["content"] != null && !Convert.IsDBNull(reader["content"])) {
+        imgData = (byte[]) reader["content"];
+      }
+      reader.Close();
+      return imgData;
+    }
+    public long AddImage(byte[] imgData) {
+      DBBackup();
+      SQLiteCommand command = m_DBConn.CreateCommand();
+      command.CommandText = "INSERT INTO " + IMAGE_TABLE + " VALUES (NULL, @img)";
+      command.Parameters.Add("@img", DbType.Binary).Value = imgData;
+      SQLiteDataReader reader = DBExecuteCommand(command);
+      reader.Close();
+      reader = DBExecuteQuery("SELECT * FROM " + IMAGE_TABLE + " ORDER BY id DESC LIMIT 1;");
+      reader.Read();
+      long id = long.Parse(reader["id"].ToString());
+      reader.Close();  
+      return id;
+    }
+    public void DeleteImage(long id) {
+      DBBackup();
+      string query = "DELETE FROM " + IMAGE_TABLE + " WHERE id=" + id;
+      SQLiteDataReader reader = DBExecuteQuery(query);
+      reader.Close();
+    }
+
+    private async void DBBackup() {
+      StorageFolder localFolder = ApplicationData.Current.LocalFolder;
+      StorageFile dbFile = await localFolder.GetFileAsync(DB_FILE);
+      StorageFile backupDB = await localFolder.CreateFileAsync(DB_FILE + ".bak", CreationCollisionOption.ReplaceExisting);
+      await dbFile.CopyAndReplaceAsync(backupDB);
+    }
     private void DBOpenConnection() {
       StorageFolder localFolder = ApplicationData.Current.LocalFolder;
       string dbFile = localFolder.Path + "\\" + DB_FILE;
@@ -129,14 +172,23 @@ namespace QuickNote {
 
       SQLiteDataReader reader = DBExecuteQuery(query);
       reader.Close();
+
+      query = "CREATE TABLE IF NOT EXISTS " + IMAGE_TABLE + "( " 
+        + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        + "content BLOB NOT NULL"
+        + ")";
+      reader = DBExecuteQuery(query);
+      reader.Close();
     }
 
     private SQLiteDataReader DBExecuteQuery(string query) {
       SQLiteCommand cmd = m_DBConn.CreateCommand();
       cmd.CommandText = query;
-      return cmd.ExecuteReader();
+      return DBExecuteCommand(cmd);
     }
-
+    private SQLiteDataReader DBExecuteCommand(SQLiteCommand command) {
+      return command.ExecuteReader();  
+    }
 
     private string DBEscapeText(string value) {
       StringBuilder sb = new StringBuilder();
